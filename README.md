@@ -31,6 +31,30 @@ The OpenAPI documentation is automatically generated and available at:
 http://localhost:3000/doc
 ```
 
+## About OpenAPI
+
+OpenAPI is a specification for describing RESTful APIs that enables:
+
+- **Standardized Documentation**: Machine-readable API definitions that can be used to generate interactive docs
+- **Code Generation**: Automatic client SDK generation for various languages
+- **Validation**: Runtime request/response validation against the API specification
+- **Tooling Ecosystem**: Integration with testing tools, mock servers, and API gateways
+
+### Common Use Cases
+
+OpenAPI is widely used for:
+1. **API Development** - Design-first API development with clear contracts
+2. **Client Integration** - Generate client libraries for web/mobile apps
+3. **Testing** - Automated API testing against the specification
+4. **Monitoring** - Validate API behavior in production
+5. **Developer Portals** - Create self-service API documentation
+
+This project implements OpenAPI 3.0 which includes:
+- Path/operation definitions
+- Parameter validation
+- Schema definitions for requests/responses
+- Automatic documentation generation
+
 ## Endpoints
 
 ### GET /users/{id}
