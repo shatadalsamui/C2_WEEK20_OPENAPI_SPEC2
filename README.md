@@ -1,5 +1,11 @@
 # OpenAPI User API
 
+This project provides:
+1. A REST API for user data
+2. Auto-generated documentation
+3. Type-safe client SDK
+4. Interactive API explorer
+
 ## Why OpenAPI?
 
 When creating backend APIs, it's challenging for others to understand:
@@ -52,33 +58,57 @@ Access endpoints:
 - Docs: `http://localhost:3000/doc` ([OpenAPI format](https://swagger.io/specification/))
 - Swagger UI: `http://localhost:3000/ui` ([Demo](https://petstore.swagger.io/))
 
-## Generating Clients
+## Client SDK Generation
 
-Using [openapi-typescript-codegen](https://www.npmjs.com/package/openapi-typescript-codegen)
+An auto-generated client is:
+1. Ready-to-use API wrapper
+2. Created from OpenAPI spec
+3. Provides typed methods
+4. Handles HTTP requests
 
-1. First, save the OpenAPI spec:
-```bash
-curl http://localhost:3000/doc > spec.json
-```
+## About Auto-Generated Clients
 
-2. Generate TypeScript client:
+Auto clients provide:
+- **Type safety**: Enforced parameter/response types
+- **Efficiency**: Reduces manual API coding
+- **Sync**: Always matches API version
+- **Universal**: Works with any frontend
+
+Generated from `spec.json`, these handle:
+- Service creation
+- HTTP communication
+- Error handling
+
+### 1. Generate TypeScript Client
 ```bash
 npx openapi-typescript-codegen --input ./spec.json --output ./generated
 ```
 
-3. Use the generated client in your projects:
+### 2. Using the Generated Client
+
 ```typescript
-import { Client } from './generated';
+// Node.js/React Usage Example
+import { UsersService } from './generated';
 
-const client = new Client();
-const user = await client.getUsersById('123');
+const api = new UsersService({
+  BASE: 'http://localhost:3000'
+});
+
+// Get user by ID
+const user = await api.getUsersById('123'); 
+
+// Get all users
+const users = await api.getUsers();
 ```
 
-## Deployment
+### 3. Available Methods
+- `getUsers()` - Fetch all users
+- `getUsersById(id)` - Fetch single user
 
-```bash
-npm run deploy
-```
+### 4. Client Features
+- Type-safe requests/responses
+- Error handling
+- Configurable base URL
 
 ## OpenAPI Specification
 
@@ -90,23 +120,23 @@ The API follows OpenAPI 3.0 standard with:
 
 ## About Swagger
 
-Swagger is a powerful toolset for working with OpenAPI specifications:
+Swagger tools for OpenAPI:
 
-1. **Swagger UI** - Interactive API documentation interface
-   - Visually explore API endpoints
-   - Try API calls directly from browser
-   - View request/response examples
+**UI Features**
+- Interactive endpoint explorer
+- In-browser API testing
+- Request/response examples
 
-2. **Key Features**
-   - Auto-generated from OpenAPI spec
-   - Supports authentication testing
-   - Response schema visualization
-   - Available at `/ui` endpoint
+**Key Benefits**
+- Auto-generated from spec
+- Supports auth testing
+- Schema visualization
+- Available at `/ui`
 
-3. **Usage in This Project**
-   - Integrated via `@hono/swagger-ui`
-   - Automatically stays in sync with API
-   - Provides developer-friendly interface
+**Implementation**
+- Added via `@hono/swagger-ui`
+- Always API-synced
+- Clean interface
 
 Try it out: `http://localhost:3000/ui`
 
@@ -148,25 +178,3 @@ Retrieves a single user by ID
   "age": 42
 }
 ```
-
-## Contributing
-
-[GitHub Flow Guide](https://guides.github.com/introduction/flow/)
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
-
-[For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
-
-```txt
-npm run cf-typegen
-```
-
-Pass the `CloudflareBindings` as generics when instantiation `Hono`:
-
-```ts
-// src/index.ts
-const app = new Hono<{ Bindings: CloudflareBindings }>()
