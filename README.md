@@ -177,4 +177,4 @@ Retrieves a single user by ID
   "name": "John Doe",
   "age": 42
 }
-```
+``
